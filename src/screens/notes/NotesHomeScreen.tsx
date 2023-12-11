@@ -1,21 +1,24 @@
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-
 import { PlusIcon } from "react-native-heroicons/solid";
 import { MagnifyingGlassIcon } from "react-native-heroicons/solid";
-import { RootBottomTabParamList } from "../../types/navigationType";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useContext, useEffect } from "react";
 import { Context } from "../../Context";
 import { ContextType } from "../../types/contextType";
-import { useIsFocused } from "@react-navigation/native";
 import { IconSize, headerTitleSize } from "../../utility";
+import { MaterialBottomTabNavigationProp } from "@react-navigation/material-bottom-tabs";
+import { RootStackParamList } from "../../types/navigationType";
+import NoteComponent from "../../components/Notes/NoteComponent";
 
-type NotesHomeProps = NativeStackScreenProps<RootBottomTabParamList, "Notes">;
+type NoteScreenProps = MaterialBottomTabNavigationProp<RootStackParamList>;
 
-export default function NotesHomeScreen({ navigation }: NotesHomeProps) {
-  const { notes, getNotes ,status} = useContext(Context) as ContextType;
+export default function NotesHomeScreen({
+  navigation,
+}: {
+  navigation: NoteScreenProps;
+}) {
+  const { notes, getNotes, status } = useContext(Context) as ContextType;
 
   useEffect(() => {
     getNotes();
@@ -30,7 +33,11 @@ export default function NotesHomeScreen({ navigation }: NotesHomeProps) {
       <TouchableOpacity
         activeOpacity={1}
         className="flex-row items-center gap-x-2 bg-gray-300 rounded-full mx-2 py-2.5 pl-1"
-        onPress={() => navigation.navigate("NotesSearch")}
+        onPress={() =>
+          navigation.navigate("SearchScreen", {
+            searchParams: "notes",
+          })
+        }
       >
         <MagnifyingGlassIcon fill="black" size={hp(IconSize)} />
         <Text>Search notes</Text>
@@ -39,17 +46,7 @@ export default function NotesHomeScreen({ navigation }: NotesHomeProps) {
         <FlatList
           data={notes}
           renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-              activeOpacity={0.8}
-              onLongPress={() => navigation.navigate("DeleteNote")}
-              className="bg-gray-300 px-4 py-3 mb-2 rounded-xl mx-2"
-            >
-                <Text className="text-lg text-ellipsis overflow-hidden">
-                  {item.title}
-                </Text>
-                <Text className="py-1 text-xs ">{item.timeDate}</Text>
-              </TouchableOpacity>
+            return (<NoteComponent item={item} />
             );
           }}
         />
@@ -60,7 +57,7 @@ export default function NotesHomeScreen({ navigation }: NotesHomeProps) {
             onPress={() => navigation.navigate("AddNote")}
             className="flex-row justify-center items-center bg-green-500 rounded-full w-14 h-14 "
           >
-            <PlusIcon fill="white" size={hp(IconSize+2)} />
+            <PlusIcon fill="white" size={hp(IconSize + 2)} />
           </TouchableOpacity>
         </View>
       </View>

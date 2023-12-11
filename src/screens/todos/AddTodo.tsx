@@ -3,7 +3,7 @@ import { TextInput, TouchableOpacity, View } from "react-native";
 import { Modal, Text } from "react-native-paper";
 import uuid from "react-native-uuid";
 import { Context } from "../../Context";
-import { Todo, TodoContextType } from "../../types/contextType";
+import { ContextType, Todo } from "../../types/contextType";
 
 type Props = {
   visible: boolean;
@@ -12,7 +12,7 @@ type Props = {
 
 const AddTodo = ({ visible, hideModal }: Props) => {
   const [text, setText] = React.useState<string>("");
-  const { saveTodo } = React.useContext(Context) as TodoContextType;
+  const { saveTodo } = React.useContext(Context) as ContextType;
   const unique_id = uuid.v4();
   const containerStyle = { backgroundColor: "white", padding: 20, margin: 10 };
 
@@ -21,6 +21,7 @@ const AddTodo = ({ visible, hideModal }: Props) => {
       id: unique_id.toString(),
       todoName: text,
       isSelected: false,
+      isCompleted: false,
     };
     saveTodo(todoObject);
     setText("");

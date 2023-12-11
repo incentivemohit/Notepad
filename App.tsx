@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
-import StackNavigaton from "./src/navigations/StackNavigaton";
 import ContextProvider from "./src/Context";
 import { PaperProvider } from "react-native-paper";
+import RootStackNavigation from "./src/navigations/RootStackNavigation";
 
 export default function App() {
   return (
@@ -9,7 +9,7 @@ export default function App() {
       <NavigationContainer>
         <PaperProvider>
           <ContextProvider>
-            <StackNavigaton />
+           <RootStackNavigation/>
           </ContextProvider>
         </PaperProvider>
       </NavigationContainer>

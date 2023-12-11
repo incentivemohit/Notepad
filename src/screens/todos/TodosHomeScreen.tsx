@@ -1,22 +1,26 @@
 import { PlusIcon } from "react-native-heroicons/solid";
 import { MagnifyingGlassIcon } from "react-native-heroicons/solid";
-import { RootBottomTabParamList } from "../../types/navigationType";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { Checkbox } from "react-native-paper";
 import React, { useEffect, useState } from "react";
-import AddTodo from "../../components/Todos/AddTodo";
 import { Context } from "../../Context";
 import { useIsFocused } from "@react-navigation/native";
 import { ContextType } from "../../types/contextType";
 import { IconSize, headerTitleSize } from "../../utility";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { MaterialBottomTabNavigationProp } from "@react-navigation/material-bottom-tabs";
+import { RootStackParamList } from "../../types/navigationType";
+import AddTodo from "./AddTodo";
+import TodoComponent from "../../components/Todos/TodoComponent";
 
-type TodosHomeProps = NativeStackScreenProps<RootBottomTabParamList, "Todos">;
+type TodosHomeProps = MaterialBottomTabNavigationProp<RootStackParamList>;
 
-export default function TodosHomeScreen({ navigation }: TodosHomeProps) {
+export default function TodosHomeScreen({
+  navigation,
+}: {
+  navigation: TodosHomeProps;
+}) {
   const [visible, setVisible] = useState(false);
   const { todos, status, getTodos, setTodos } = React.useContext(
     Context
@@ -26,7 +30,6 @@ export default function TodosHomeScreen({ navigation }: TodosHomeProps) {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
- 
   const handleCompleteTodo = async (id: string, type: boolean) => {
     const newArray = todos.map((item) => {
       if (item.id === id) {
@@ -54,7 +57,11 @@ export default function TodosHomeScreen({ navigation }: TodosHomeProps) {
         <TouchableOpacity
           activeOpacity={1}
           className="flex-row items-center gap-x-2 bg-gray-300 rounded-full mx-2 py-2.5 pl-1"
-          onPress={() => navigation.navigate("TodoSearch")}
+          onPress={() =>
+            navigation.navigate("SearchScreen", {
+              searchParams: "to-dos",
+            })
+          }
         >
           <MagnifyingGlassIcon fill="black" size={hp(IconSize)} />
           <Text>Search to-dos</Text>
@@ -65,28 +72,10 @@ export default function TodosHomeScreen({ navigation }: TodosHomeProps) {
               data={todos}
               renderItem={({ item }) => {
                 return (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onLongPress={() => navigation.navigate("DeleteTodo")}
-                    className="bg-gray-300 px-4 py-3 mb-2 rounded-xl mx-2 flex-row items-center"
-                  >
-                    <Checkbox
-                      status={item.isCompleted ? "checked" : "unchecked"}
-                      onPress={() =>
-                        handleCompleteTodo(item.id, item.isCompleted)
-                      }
-                    />
-                    <Text
-                      className="text-lg text-ellipsis overflow-hidden"
-                      style={{
-                        textDecorationLine: item.isCompleted
-                          ? "line-through"
-                          : "none",
-                      }}
-                    >
-                      {item.todoName}
-                    </Text>
-                  </TouchableOpacity>
+                  <TodoComponent
+                    item={item}
+                    handleCompleteTodo={handleCompleteTodo}
+                  />
                 );
               }}
             />

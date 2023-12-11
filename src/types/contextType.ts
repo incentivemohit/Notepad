@@ -2,28 +2,29 @@ export type Todo = {
   id: string;
   todoName: string;
   isSelected: boolean;
-  isCompleted:boolean
+  isCompleted: boolean;
 };
 
 export type Note = {
   id: string;
   title: string;
-  timeDate:string ;
+  timeDate: string;
   desc: string;
   isSelected: boolean;
 };
 
 export interface ContextType {
+  status: boolean;
+  setStatus: (status: boolean) => void;
+  
   notes: Note[];
-  setNotes: React.Dispatch<React.SetStateAction<Note[]>>;
+  setNotes: (Note: Note[]) => void;
   getNotes: () => void;
   saveNote: (note: Note) => void;
   updateNote: (id: string) => void;
 
   todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-  status: boolean;
-  setStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  setTodos: (Todo: Todo[]) => void;
   getTodos: () => void;
   saveTodo: (todo: Todo) => void;
   updateTodo: (id: string) => void;

@@ -4,28 +4,25 @@ import NotesHomeScreen from "../screens/notes/NotesHomeScreen";
 import TodosHomeScreen from "../screens/todos/TodosHomeScreen";
 import { Bars3Icon } from "react-native-heroicons/solid";
 import { PencilSquareIcon } from "react-native-heroicons/solid";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { RootBottomTabParamList } from "../types/navigationType";
-const Tab = createMaterialBottomTabNavigator<RootBottomTabParamList>();
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { BottomTabParamList } from "../types/navigationType";
+const Tab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomNavigation() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Notes"
+        name="NotesHomeScreen"
         component={NotesHomeScreen}
         options={{
-          tabBarIcon: () => <Bars3Icon fill="black" size={hp(3)} />,
+          tabBarIcon: () => <Bars3Icon fill="black" size={hp(3)} />,tabBarLabel:"Notes"
         }}
       />
       <Tab.Screen
-        name="Todos"
+        name="TodosHomeScreen"
         component={TodosHomeScreen}
         options={{
-          tabBarIcon: () => <PencilSquareIcon fill="black" size={hp(3)} />,
+          tabBarIcon: () => <PencilSquareIcon fill="black" size={hp(3)} />,tabBarLabel:"Todos"
         }}
       />
     </Tab.Navigator>
