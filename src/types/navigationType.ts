@@ -4,10 +4,14 @@ export type RootStackParamList = {
     searchParams: string;
   };
   AddNote: undefined;
-  DeleteScreen: {
-    deleteParams:string
+  EditNote: {
+    id: string;
   };
+
   AddTodo: undefined;
+  DeleteScreen: {
+    deleteParams: string;
+  };
 };
 
 export type BottomTabParamList = {

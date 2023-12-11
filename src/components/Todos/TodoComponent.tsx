@@ -13,13 +13,17 @@ type TodoProps = {
 };
 
 export default function TodoComponent({ item, handleCompleteTodo }: TodoProps) {
-  const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "DeleteScreen">>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (
     <>
       <TouchableOpacity
         activeOpacity={0.8}
+        onPress={() =>
+          navigation.navigate("EditTodo", {
+            id: item.id,
+          })
+        }
         onLongPress={() =>
           navigation.navigate("DeleteScreen", {
             deleteParams: "todos",

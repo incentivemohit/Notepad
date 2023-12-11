@@ -10,6 +10,7 @@ import { IconSize, headerTitleSize } from "../../utility";
 import { MaterialBottomTabNavigationProp } from "@react-navigation/material-bottom-tabs";
 import { RootStackParamList } from "../../types/navigationType";
 import NoteComponent from "../../components/Notes/NoteComponent";
+import { useIsFocused } from "@react-navigation/native";
 
 type NoteScreenProps = MaterialBottomTabNavigationProp<RootStackParamList>;
 
@@ -19,10 +20,10 @@ export default function NotesHomeScreen({
   navigation: NoteScreenProps;
 }) {
   const { notes, getNotes, status } = useContext(Context) as ContextType;
-
+  const focused = useIsFocused();
   useEffect(() => {
     getNotes();
-  }, [status]);
+  }, [focused, status]);
   return (
     <SafeAreaView className="flex-1">
       <View className=" flex-row items-center py-3">
@@ -46,8 +47,7 @@ export default function NotesHomeScreen({
         <FlatList
           data={notes}
           renderItem={({ item }) => {
-            return (<NoteComponent item={item} />
-            );
+            return <NoteComponent item={item} />;
           }}
         />
 

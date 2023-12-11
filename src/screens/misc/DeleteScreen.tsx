@@ -13,14 +13,13 @@ import { RootStackParamList } from "../../types/navigationType";
 
 var items = 0;
 export default function DeleteScreen() {
-  const { notes, setNotes, todos, setTodos } = React.useContext(
-    Context
-  ) as ContextType;
+  const { notes, setNotes, todos, setTodos, setStatus, status } =
+    React.useContext(Context) as ContextType;
   const [count, setCount] = useState<number>(items);
 
   const navigation = useNavigation();
-  const route = useRoute<RouteProp<RootStackParamList,"DeleteScreen">>()
-  const category = route.params.deleteParams
+  const route = useRoute<RouteProp<RootStackParamList, "DeleteScreen">>();
+  const category = route.params.deleteParams;
 
   const removeSelectedItems = async (type: string) => {
     if (type === "notes") {

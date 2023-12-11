@@ -5,15 +5,18 @@ import { Note } from "../../types/contextType";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 
-
-export default function NoteComponent({ item}: {item:Note}) {
- 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList,"DeleteScreen">>()
+export default function NoteComponent({ item }: { item: Note }) {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (
     <>
       <TouchableOpacity
         activeOpacity={0.8}
+        onPress={() =>
+          navigation.navigate("EditNote", {
+            id: item.id,
+          })
+        }
         onLongPress={() =>
           navigation.navigate("DeleteScreen", {
             deleteParams: "notes",

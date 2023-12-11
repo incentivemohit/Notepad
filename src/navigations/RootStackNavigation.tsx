@@ -6,6 +6,7 @@ import SearchScreen from "../screens/misc/SearchScreen";
 import AddNote from "../screens/notes/AddNote";
 import DeleteScreen from "../screens/misc/DeleteScreen";
 import AddTodo from "../screens/todos/AddTodo";
+import EditNote from "../components/Notes/EditNote";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -25,6 +26,7 @@ export default function RootStackNavigation() {
         }}
         component={AddNote}
       />
+      <Stack.Screen name="EditNote" component={EditNote} />
       <Stack.Screen name="DeleteScreen" component={DeleteScreen} />
       <Stack.Screen
         name="AddTodo"
@@ -33,7 +35,6 @@ export default function RootStackNavigation() {
         }}
         component={AddTodo}
       />
-    
     </Stack.Navigator>
   );
 }
