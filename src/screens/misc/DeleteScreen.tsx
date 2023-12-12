@@ -13,7 +13,7 @@ import { RootStackParamList } from "../../types/navigationType";
 
 var items = 0;
 export default function DeleteScreen() {
-  const { notes, setNotes, todos, setTodos, setStatus, status } =
+  const { notes, setNotes, todos, setTodos, loading, setLoading } =
     React.useContext(Context) as ContextType;
   const [count, setCount] = useState<number>(items);
 
@@ -37,6 +37,7 @@ export default function DeleteScreen() {
       });
       await AsyncStorage.setItem("todos", JSON.stringify(newArray));
     }
+    setLoading(!loading);
     navigation.goBack();
   };
 

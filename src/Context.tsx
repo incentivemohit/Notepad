@@ -7,7 +7,7 @@ export const Context = createContext<ContextType | null>(null);
 const TodoProvider = ({ children }: { children: React.ReactNode }) => {
   const [todos, setTodos] = React.useState<Todo[]>([]);
   const [notes, setNotes] = React.useState<Note[]>([]);
-  const [status, setStatus] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const getNotes = async () => {
     try {
@@ -30,16 +30,12 @@ const TodoProvider = ({ children }: { children: React.ReactNode }) => {
           x.push(element);
         });
       }
-      x.push(item);
+      x.unshift(item);
       await AsyncStorage.setItem("notes", JSON.stringify(x));
-      setStatus(!status);
+      setLoading(!loading);
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const updateNote = () => {
-    console.log("update");
   };
 
   // To-dos related functions
@@ -54,9 +50,9 @@ const TodoProvider = ({ children }: { children: React.ReactNode }) => {
           x.push(element);
         });
       }
-      x.push(item);
+      x.unshift(item);
       await AsyncStorage.setItem("todos", JSON.stringify(x));
-      setStatus(!status);
+      setLoading(!loading);
     } catch (error) {
       console.log(error);
     }
@@ -73,10 +69,6 @@ const TodoProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const updateTodo = () => {
-    console.log("update");
-  };
-
   return (
     <Context.Provider
       value={{
@@ -84,14 +76,12 @@ const TodoProvider = ({ children }: { children: React.ReactNode }) => {
         setNotes,
         getNotes,
         saveNote,
-        updateNote,
         todos,
         setTodos,
-        status,
-        setStatus,
+        loading,
+        setLoading,
         getTodos,
         saveTodo,
-        updateTodo,
       }}
     >
       {children}

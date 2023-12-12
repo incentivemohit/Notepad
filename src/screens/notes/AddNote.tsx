@@ -7,15 +7,19 @@ import { useNavigation } from "@react-navigation/native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { Context } from "../../Context";
 import uuid from "react-native-uuid";
-import { ContextType, Note,  } from "../../types/contextType";
+import { ContextType, Note } from "../../types/contextType";
 import { IconSize } from "../../utility";
+import { MaterialBottomTabNavigationProp } from "react-native-paper";
+import { BottomTabParamList } from "../../types/navigationType";
 
 export default function AddNote() {
+  const navigaton =
+    useNavigation<MaterialBottomTabNavigationProp<BottomTabParamList>>();
+
   const { saveNote } = useContext(Context) as ContextType;
   const [title, setTitle] = useState<string>("");
   const [desc, setdesc] = useState<string>("");
   const unique_id = uuid.v4();
-  const navigation = useNavigation();
   const date = new Date();
 
   const handleSaveNote = () => {
@@ -27,10 +31,10 @@ export default function AddNote() {
         minute: "2-digit",
       })}, ${date.toLocaleDateString()}`,
       desc: desc,
-      isSelected:false
+      isSelected: false,
     };
     saveNote(note);
-    navigation.goBack();
+    navigaton.navigate("NotesHomeScreen");
     setTimeout(() => {
       ToastAndroid.show("Saved ", ToastAndroid.SHORT);
     }, 800);
@@ -45,10 +49,14 @@ export default function AddNote() {
           <ArrowLeftIcon
             fill="black"
             size={hp(IconSize)}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigaton.goBack()}
           />
           {title != "" || desc != "" ? (
-            <CheckIcon fill="black" size={hp(IconSize)} onPress={handleSaveNote} />
+            <CheckIcon
+              fill="black"
+              size={hp(IconSize)}
+              onPress={handleSaveNote}
+            />
           ) : null}
         </View>
         <View className="flex-1 pl-4 flex-col gap-y-1 pt-2 ">

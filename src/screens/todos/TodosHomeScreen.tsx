@@ -22,11 +22,10 @@ export default function TodosHomeScreen({
   navigation: TodosHomeProps;
 }) {
   const [visible, setVisible] = useState(false);
-  const { todos, status, getTodos, setTodos } = React.useContext(
+  const { todos, loading, getTodos, setTodos } = React.useContext(
     Context
   ) as ContextType;
 
-  const focused = useIsFocused();
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
@@ -45,7 +44,7 @@ export default function TodosHomeScreen({
 
   useEffect(() => {
     getTodos();
-  }, [status, focused]);
+  }, [loading]);
   return (
     <>
       <SafeAreaView className="flex-1 relative">

@@ -19,11 +19,11 @@ export default function NotesHomeScreen({
 }: {
   navigation: NoteScreenProps;
 }) {
-  const { notes, getNotes, status } = useContext(Context) as ContextType;
-  const focused = useIsFocused();
+  const { notes, getNotes, loading } = useContext(Context) as ContextType;
+
   useEffect(() => {
     getNotes();
-  }, [focused, status]);
+  }, [loading]);
   return (
     <SafeAreaView className="flex-1">
       <View className=" flex-row items-center py-3">

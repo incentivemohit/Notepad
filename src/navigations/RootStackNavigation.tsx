@@ -7,6 +7,7 @@ import AddNote from "../screens/notes/AddNote";
 import DeleteScreen from "../screens/misc/DeleteScreen";
 import AddTodo from "../screens/todos/AddTodo";
 import EditNote from "../components/Notes/EditNote";
+import SplashScreen from "../screens/SplashScreen";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -16,7 +17,7 @@ export default function RootStackNavigation() {
       screenOptions={{
         headerShown: false,
       }}
-    >
+    ><Stack.Screen name="SplashScreen" component={SplashScreen} />
       <Stack.Screen name="Home" component={BottomNavigation} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen
