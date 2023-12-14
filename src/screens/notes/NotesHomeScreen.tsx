@@ -5,7 +5,7 @@ import { PlusIcon } from "react-native-heroicons/solid";
 import { MagnifyingGlassIcon } from "react-native-heroicons/solid";
 import { useContext, useEffect } from "react";
 import { Context } from "../../Context";
-import { ContextType } from "../../types/contextType";
+import { NoteContextType } from "../../types/contextType";
 import { IconSize, headerTitleSize } from "../../utility";
 import { MaterialBottomTabNavigationProp } from "@react-navigation/material-bottom-tabs";
 import { RootStackParamList } from "../../types/navigationType";
@@ -19,7 +19,7 @@ export default function NotesHomeScreen({
 }: {
   navigation: NoteScreenProps;
 }) {
-  const { notes, getNotes, loading } = useContext(Context) as ContextType;
+  const { notes, getNotes, loading } = useContext(Context) as NoteContextType;
 
   useEffect(() => {
     getNotes();

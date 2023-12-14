@@ -5,14 +5,13 @@ import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import React, { useEffect, useState } from "react";
 import { Context } from "../../Context";
-import { useIsFocused } from "@react-navigation/native";
-import { ContextType } from "../../types/contextType";
 import { IconSize, headerTitleSize } from "../../utility";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialBottomTabNavigationProp } from "@react-navigation/material-bottom-tabs";
 import { RootStackParamList } from "../../types/navigationType";
 import AddTodo from "./AddTodo";
 import TodoComponent from "../../components/Todos/TodoComponent";
+import { TodoContextType } from "../../types/contextType";
 
 type TodosHomeProps = MaterialBottomTabNavigationProp<RootStackParamList>;
 
@@ -24,7 +23,7 @@ export default function TodosHomeScreen({
   const [visible, setVisible] = useState(false);
   const { todos, loading, getTodos, setTodos } = React.useContext(
     Context
-  ) as ContextType;
+  ) as TodoContextType;
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
